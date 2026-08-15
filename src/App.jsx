@@ -25,7 +25,7 @@ import AdminOrderProvider from './components/context/adminOrderContext/AdminOrde
 import Dashboard from './components/pages/admin_page/dashboard/Dashboard';
 import Orders from './components/pages/admin_page/order/Orders';
 import OrderDetails from './components/pages/admin_page/order/OrderDetails';
-
+import NotFound from './components/pages/NotFound/NotFound';
 
 function App() {
     return (
@@ -86,6 +86,8 @@ function App() {
 
                             </Route>
                         </Route>
+
+                        <Route path="*" element={<NotFound />}/>
 
                     </Routes>
                 </Router>
