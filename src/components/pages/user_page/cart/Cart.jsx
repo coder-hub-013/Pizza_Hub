@@ -5,7 +5,7 @@ import { useCart } from "../../../context/cart/useCart";
 export default function Cart() {
 
     const navigate = useNavigate();
-    const { cartItems, subtotal, increaseQuantity, decreaseQuantity, handleSelectItem, selectedCartItemIds } = useCart();
+    const { cartItems, subtotal, increaseQuantity, decreaseQuantity, handleSelectItem, selectedCartItemIds .removeFromCart} = useCart();
     const deliveryCharge = 0;
     const total = subtotal + deliveryCharge;
     const handleCheckout = () => {
@@ -94,7 +94,9 @@ export default function Cart() {
 
                                 </div>
 
-                                <button className="remove">
+                                <button className="remove
+                                    onClick={() => removeFromCart(item.cartId)}
+                                    ">
                                     Remove
                                 </button>
                             </div>
