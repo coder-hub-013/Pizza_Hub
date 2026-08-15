@@ -1,0 +1,189 @@
+.admin-add-pizza-addPizzaContainer{
+    width:90%;
+    max-width:1100px;
+    margin:30px auto;
+}
+
+.admin-add-pizza-pageHeader{
+    margin-bottom:25px;
+}
+
+.admin-add-pizza-pageHeader h1{
+    font-size:32px;
+    color:#222;
+    margin-bottom:8px;
+}
+
+.admin-add-pizza-pageHeader p{
+    color:#666;
+    font-size:15px;
+}
+
+.admin-add-pizza-pizzaForm{
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+}
+
+.admin-add-pizza-card{
+    background:white;
+    border-radius:12px;
+    padding:25px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.admin-add-pizza-card h2{
+    margin-bottom:20px;
+    color:#333;
+    font-size:22px;
+    border-bottom:1px solid #ececec;
+    padding-bottom:12px;
+}
+
+.admin-add-pizza-formGroup{
+    display:flex;
+    flex-direction:column;
+    margin-bottom:20px;
+}
+
+.admin-add-pizza-formGroup label{
+    margin-bottom:8px;
+    font-size:15px;
+    font-weight:600;
+    color:#444;
+}
+
+.admin-add-pizza-formGroup input,
+.admin-add-pizza-formGroup textarea,
+.admin-add-pizza-formGroup select{
+    width:100%;
+    padding:12px 15px;
+    border:1px solid #d8d8d8;
+    border-radius:8px;
+    font-size:15px;
+    transition:3s;
+    outline:none;
+    background:white;
+}
+
+.admin-add-pizza-formGroup textarea{
+    resize:vertical;
+    min-height:120px;
+}
+
+.admin-add-pizza-formGroup input:focus,
+.admin-add-pizza-formGroup textarea:focus,
+.admin-add-pizza-formGroup select:focus{
+    border-color:#ff6b00;
+    box-shadow:0 0 8px rgba(255,107,0,.2);
+}
+
+.admin-add-pizza-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.admin-add-pizza-vegetableGrid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-top:5px;
+}
+
+.admin-add-pizza-checkboxItem{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:15px;
+    cursor:pointer;
+}
+
+.admin-add-pizza-checkboxItem input{
+    width:18px;
+    height:18px;
+}
+
+.admin-add-pizza-preview{
+    width:240px;
+    height:180px;
+    border:2px dashed #ccc;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:15px;
+    background:#fafafa;
+}
+
+.admin-add-pizza-preview img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.admin-add-pizza-buttonGroup{
+    display:flex;
+    justify-content:flex-end;
+    gap:15px;
+}
+
+.admin-add-pizza-saveBtn,
+.admin-add-pizza-resetBtn{
+    padding:12px 30px;
+    border:none;
+    border-radius:8px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.admin-add-pizza-saveBtn{
+    background:#ff6b00;
+    color:white;
+}
+
+.admin-add-pizza-saveBtn:hover{
+    background:#e85f00;
+}
+
+.admin-add-pizza-resetBtn{
+    background:#e5e5e5;
+    color:#333;
+}
+
+.admin-add-pizza-resetBtn:hover{
+    background:#d4d4d4;
+}
+
+@media(max-width:900px){
+
+    .admin-add-pizza-vegetableGrid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .admin-add-pizza-row{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .admin-add-pizza-addPizzaContainer{
+        width:95%;
+    }
+
+    .admin-add-pizza-vegetableGrid{
+        grid-template-columns:1fr;
+    }
+
+    .admin-add-pizza-buttonGroup{
+        flex-direction:column;
+    }
+
+    .admin-add-pizza-saveBtn,
+    .admin-add-pizza-resetBtn{
+        width:100%;
+    }
+
+}

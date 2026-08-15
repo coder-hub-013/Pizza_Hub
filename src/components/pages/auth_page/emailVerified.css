@@ -1,0 +1,150 @@
+.email-verified-page {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px 20px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff7ed,
+            #ffffff,
+            #fef2f2
+        );
+}
+
+
+.email-verified-card {
+    width: 100%;
+    max-width: 440px;
+
+    padding: 42px 36px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #f1f1f1;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 20px 50px
+        rgba(0, 0, 0, 0.08);
+
+    box-sizing: border-box;
+}
+
+
+.email-verified-icon {
+    width: 68px;
+    height: 68px;
+
+    margin: 0 auto 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 34px;
+    font-weight: 700;
+}
+
+
+.email-success-icon {
+    color: #15803d;
+
+    background: #dcfce7;
+
+    border: 1px solid #bbf7d0;
+}
+
+
+.email-failed-icon {
+    color: #b91c1c;
+
+    background: #fee2e2;
+
+    border: 1px solid #fecaca;
+}
+
+
+.email-verified-card h1 {
+    margin: 0 0 12px;
+
+    color: #111827;
+
+    font-size: 28px;
+
+    font-weight: 700;
+}
+
+
+.email-verified-card p {
+    max-width: 350px;
+
+    margin: 0 auto 28px;
+
+    color: #6b7280;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+
+.email-verified-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 160px;
+
+    padding: 12px 22px;
+
+    border-radius: 8px;
+
+    background: #dc2626;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.15s ease;
+}
+
+
+.email-verified-button:hover {
+    background: #b91c1c;
+}
+
+
+.email-verified-button:active {
+    transform: scale(0.97);
+}
+
+
+@media (max-width: 500px) {
+
+    .email-verified-card {
+        padding: 35px 22px;
+    }
+
+    .email-verified-card h1 {
+        font-size: 24px;
+    }
+}

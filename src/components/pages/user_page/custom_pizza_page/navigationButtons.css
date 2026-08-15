@@ -1,0 +1,115 @@
+.navigation-buttons{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:40px;
+
+}
+
+.left-button{
+
+    flex:1;
+
+}
+
+.right-button{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+}
+
+.previous-btn{
+
+    background:white;
+
+    color:#2563eb;
+
+    border:2px solid #2563eb;
+
+    padding:14px 28px;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.previous-btn:hover{
+
+    background:#2563eb;
+
+    color:white;
+
+}
+
+.next-btn{
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    padding:14px 28px;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.next-btn:hover:not(:disabled){
+
+    background:#1d4ed8;
+
+}
+
+.next-btn:disabled{
+
+    background:#94a3b8;
+
+    cursor:not-allowed;
+
+}
+
+@media(max-width:768px){
+
+.navigation-buttons{
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+.left-button,
+.right-button{
+
+    width:100%;
+
+}
+
+.previous-btn,
+.next-btn{
+
+    width:100%;
+
+}
+
+}
