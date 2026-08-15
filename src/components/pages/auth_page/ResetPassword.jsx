@@ -6,22 +6,28 @@ import {
 import "./resetPassword.css";
 
 
-
 const ResetPassword = () => {
 
     const url = import.meta.env.VITE_API_URL;
 
-    const { token } =
-        useParams();
+    const { token } = useParams();
 
-    const navigate =
-        useNavigate();
+    const navigate = useNavigate();
+
 
     const [password, setPassword] =
         useState("");
 
     const [confirmPassword, setConfirmPassword] =
         useState("");
+
+
+    const [showPassword, setShowPassword] =
+        useState(false);
+
+    const [showConfirmPassword, setShowConfirmPassword] =
+        useState(false);
+
 
     const [loading, setLoading] =
         useState(false);
@@ -32,24 +38,48 @@ const ResetPassword = () => {
     const [success, setSuccess] =
         useState("");
 
+    const isValidPassword = (password) => {
+
+        const passwordRegex =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+        return passwordRegex.test(password);
+
+    };
+
     const handleSubmit = async (e) => {
 
         e.preventDefault();
 
+
         setError("");
+
         setSuccess("");
 
         if (!password) {
+
             setError(
-                "Please enter a password"
+                "Please enter a new password."
             );
+
             return;
         }
 
-        if (password.length < 6) {
+        if (!isValidPassword(password)) {
+
             setError(
-                "Password must be at least 6 characters"
+                "Password must be at least 8 characters and contain uppercase, lowercase and a number."
             );
+
+            return;
+        }
+
+        if (!confirmPassword) {
+
+            setError(
+                "Please confirm your password."
+            );
+
             return;
         }
 
@@ -57,15 +87,19 @@ const ResetPassword = () => {
             password !==
             confirmPassword
         ) {
+
             setError(
-                "Passwords do not match"
+                "Passwords do not match."
             );
+
             return;
         }
+
 
         try {
 
             setLoading(true);
+
 
             const response =
                 await fetch(
@@ -84,41 +118,67 @@ const ResetPassword = () => {
                     }
                 );
 
+
             const data =
                 await response.json();
 
+
             if (!response.ok) {
+
                 throw new Error(
                     data.message ||
-                    "Password reset failed"
+                    "Password reset failed."
                 );
+
             }
 
+
             setSuccess(
-                data.message
+                data.message ||
+                "Password reset successfully."
             );
 
-            /*
-            Redirect after successful reset
-            */
+            setPassword("");
+
+            setConfirmPassword("");
+
 
             setTimeout(() => {
-                navigate("/login");
+
+                navigate(
+                    "/login",
+                    {
+                        replace: true
+                    }
+                );
+
             }, 2000);
+
 
         } catch (error) {
 
-            setError(
-                error.message
+            console.error(
+                error
             );
+
+
+            setError(
+                error.message ||
+                "Something went wrong."
+            );
+
 
         } finally {
 
             setLoading(false);
+
         }
+
     };
 
+
     return (
+
         <div className="reset-password-page">
 
             <div className="reset-password-card">
@@ -129,16 +189,18 @@ const ResetPassword = () => {
                         🔐
                     </div>
 
+
                     <h1>
                         Reset Password
                     </h1>
 
-                    <p>
-                        Create a new password for your
-                        account. Make sure it is secure
-                        and easy for you to remember.
-                    </p>
 
+                    <p>
+                        Create a new password for
+                        your account. Make sure it
+                        is secure and easy for you
+                        to remember.
+                    </p>
 
                 </div>
 
@@ -150,8 +212,11 @@ const ResetPassword = () => {
                     <div className="password-field">
 
                         <label htmlFor="password">
+
                             New Password
+
                         </label>
+
 
                         <div className="password-input-wrapper">
 
@@ -159,9 +224,14 @@ const ResetPassword = () => {
                                 🔒
                             </span>
 
+
                             <input
                                 id="password"
-                                type="password"
+                                type={
+                                    showPassword
+                                        ? "text"
+                                        : "password"
+                                }
                                 placeholder="Enter new password"
                                 value={password}
                                 onChange={(e) =>
@@ -170,18 +240,40 @@ const ResetPassword = () => {
                                     )
                                 }
                                 autoComplete="new-password"
+                                required
                             />
+
+
+                            <button
+                                type="button"
+                                className="password-toggle"
+                                onClick={() =>
+                                    setShowPassword(
+                                        !showPassword
+                                    )
+                                }
+                            >
+
+                                {
+                                    showPassword
+                                        ? "Hide"
+                                        : "Show"
+                                }
+
+                            </button>
 
                         </div>
 
                     </div>
 
-
                     <div className="password-field">
 
                         <label htmlFor="confirmPassword">
+
                             Confirm Password
+
                         </label>
+
 
                         <div className="password-input-wrapper">
 
@@ -189,65 +281,130 @@ const ResetPassword = () => {
                                 🔒
                             </span>
 
+
                             <input
                                 id="confirmPassword"
-                                type="password"
+                                type={
+                                    showConfirmPassword
+                                        ? "text"
+                                        : "password"
+                                }
                                 placeholder="Confirm your password"
-                                value={confirmPassword}
+                                value={
+                                    confirmPassword
+                                }
                                 onChange={(e) =>
                                     setConfirmPassword(
                                         e.target.value
                                     )
                                 }
                                 autoComplete="new-password"
+                                required
                             />
 
+
+                            <button
+                                type="button"
+                                className="password-toggle"
+                                onClick={() =>
+                                    setShowConfirmPassword(
+                                        !showConfirmPassword
+                                    )
+                                }
+                            >
+
+                                {
+                                    showConfirmPassword
+                                        ? "Hide"
+                                        : "Show"
+                                }
+
+                            </button>
+
                         </div>
 
                     </div>
-
 
                     <div className="password-requirement">
-                        <span>•</span>
-                        Password must be at least 6 characters
+
+                        <span>
+                            •
+                        </span>
+
+                        Password must contain at least
+                        8 characters, one uppercase
+                        letter, one lowercase letter
+                        and one number.
+
                     </div>
 
-
                     {error && (
-                        <div className="reset-message reset-error">
-                            <span>⚠️</span>
-                            <p>{error}</p>
-                        </div>
-                    )}
 
+                        <div className="reset-message reset-error">
+
+                            <span>
+                                ⚠️
+                            </span>
+
+                            <p>
+                                {error}
+                            </p>
+
+                        </div>
+
+                    )}
 
                     {success && (
-                        <div className="reset-message reset-success">
-                            <span>✓</span>
-                            <p>{success}</p>
-                        </div>
-                    )}
 
+                        <div className="reset-message reset-success">
+
+                            <span>
+                                ✓
+                            </span>
+
+                            <p>
+                                {success}
+                            </p>
+
+                        </div>
+
+                    )}
 
                     <button
                         type="submit"
                         className="reset-password-button"
                         disabled={loading}
                     >
+
                         {loading ? (
+
                             <>
-                                <span className="reset-spinner"></span>
+
+                                <span className="reset-spinner">
+                                </span>
+
                                 Updating Password...
+
                             </>
+
                         ) : (
+
                             <>
+
                                 Reset Password
-                                <span>→</span>
+
+                                <span>
+                                    →
+                                </span>
+
                             </>
+
                         )}
+
                     </button>
 
                 </form>
+
 
 
                 <div className="reset-password-footer">
@@ -256,89 +413,28 @@ const ResetPassword = () => {
                         Remember your password?
                     </span>
 
+
                     <button
                         type="button"
-                        onClick={() => navigate("/login")}
+                        onClick={() =>
+                            navigate("/login")
+                        }
                     >
+
                         Back to Login
+
                     </button>
 
                 </div>
 
+
             </div>
 
         </div>
+
     );
 
-    // return (
-    //     <div className="reset-password-page">
-
-    //         <div className="reset-password-card">
-
-    //             <h1>
-    //                 Reset Password
-    //             </h1>
-
-    //             <p>
-    //                 Create a new password
-    //                 for your account.
-    //             </p>
-
-    //             <form
-    //                 onSubmit={handleSubmit}
-    //             >
-
-    //                 <input
-    //                     type="password"
-    //                     placeholder="New password"
-    //                     value={password}
-    //                     onChange={(e) =>
-    //                         setPassword(
-    //                             e.target.value
-    //                         )
-    //                     }
-    //                 />
-
-    //                 <input
-    //                     type="password"
-    //                     placeholder="Confirm password"
-    //                     value={
-    //                         confirmPassword
-    //                     }
-    //                     onChange={(e) =>
-    //                         setConfirmPassword(
-    //                             e.target.value
-    //                         )
-    //                     }
-    //                 />
-
-    //                 {error && (
-    //                     <p className="error">
-    //                         {error}
-    //                     </p>
-    //                 )}
-
-    //                 {success && (
-    //                     <p className="success">
-    //                         {success}
-    //                     </p>
-    //                 )}
-
-    //                 <button
-    //                     type="submit"
-    //                     disabled={loading}
-    //                 >
-    //                     {loading
-    //                         ? "Updating..."
-    //                         : "Reset Password"}
-    //                 </button>
-
-    //             </form>
-
-    //         </div>
-
-    //     </div>
-    // );
 };
+
 
 export default ResetPassword;
