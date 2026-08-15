@@ -94,9 +94,7 @@ export default function Cart() {
 
                                 </div>
 
-                                <button className="remove
-                                    onClick={() => removeFromCart(item.cartId)}
-                                    ">
+                                <button className="remove" onClick={() => removeFromCart(item.cartId)}>
                                     Remove
                                 </button>
                             </div>
