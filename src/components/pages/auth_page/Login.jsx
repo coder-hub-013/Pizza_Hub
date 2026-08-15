@@ -6,78 +6,209 @@ import useAuth from "../../context/authContext/useAuth";
 import LoadingPage from "../user_page/loading/LoadingPage";
 
 export default function Login() {
-    const {setUser} = useAuth();
-    const [loading,setLoading] = useState(false);
+
+    const { setUser } = useAuth();
+
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
+
 
     const [formData, setFormData] = useState({
         email: "",
         password: ""
     });
 
+
     const [showPassword, setShowPassword] = useState(false);
 
+
     const handleChange = (event) => {
+
         setFormData({
             ...formData,
             [event.target.name]: event.target.value
         });
+
     };
 
-    const handleSubmit = async(event) => {
+
+    const isValidEmail = (email) => {
+
+        const emailRegex =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        return emailRegex.test(email);
+
+    };
+
+    const handleSubmit = async (event) => {
+
         event.preventDefault();
-        setFormData('')
+
+
+        const email =
+            formData.email.trim();
+
+
+        const password =
+            formData.password;
+
+        if (!email) {
+
+            toast.error(
+                "Please enter your email."
+            );
+
+            return;
+        }
+
+        if (!isValidEmail(email)) {
+
+            toast.error(
+                "Please enter a valid email address."
+            );
+
+            return;
+        }
+
+        if (!password) {
+
+            toast.error(
+                "Please enter your password."
+            );
+
+            return;
+        }
+
+
         setLoading(true);
 
+
         try {
-            let response = await fetch(`${import.meta.env.VITE_API_URL}/router/auth/login`, {
-                method:"POST",
-                headers:{
-                    'Content-type' : "application/json",
-                },
-                body:JSON.stringify({data:formData}),
-                credentials:'include'
-            });
-            let result = await response.json();
-            setLoading(false);
-            if(response.status == 200) {
-                toast.success(result.message);
-                setUser({role:result.role});
-                if(result?.role === 'ADMIN') {
-                    navigate("/admin/dashboard", { replace: true });
-                } else {
-                    navigate("/", { replace: true });
+
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/router/auth/login`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+                    },
+
+                    body: JSON.stringify({
+                        data: {
+                            email,
+                            password
+                        }
+                    }),
+
+                    credentials: "include"
                 }
+            );
+
+
+            const result =
+                await response.json();
+
+
+            if (response.ok) {
+
+                toast.success(
+                    result.message
+                );
+
+
+                setUser({
+                    role: result.role
+                });
+
+
+                if (result?.role === "ADMIN") {
+
+                    navigate(
+                        "/admin/dashboard",
+                        {
+                            replace: true
+                        }
+                    );
+
+                } else {
+
+                    navigate(
+                        "/",
+                        {
+                            replace: true
+                        }
+                    );
+
+                }
+
             } else {
-                throw new Error(result.message);
+
+                throw new Error(
+                    result.message ||
+                    "Login failed."
+                );
             }
 
+
         } catch (error) {
-            console.log(error.message);
-            toast.error(error.message);
+
+            console.error(
+                error
+            );
+
+
+            toast.error(
+                error.message ||
+                "Something went wrong."
+            );
+
+        } finally {
+
             setLoading(false);
+
         }
+
     };
 
-    if(loading) {
-        return <LoadingPage />
+
+    if (loading) {
+
+        return <LoadingPage />;
+
     }
+
+
     return (
+
         <div className="login-page">
 
             <div className="login-card">
 
-                <h1>Welcome Back</h1>
+                <h1>
+                    Welcome Back
+                </h1>
+
 
                 <p>
-                    Login to continue ordering delicious pizzas.
+                    Login to continue ordering
+                    delicious pizzas.
                 </p>
 
-                <form onSubmit={handleSubmit}>
+
+                <form
+                    onSubmit={handleSubmit}
+                >
 
                     <div className="form-group">
 
-                        <label>Email</label>
+                        <label>
+                            Email
+                        </label>
+
 
                         <input
                             type="email"
@@ -92,7 +223,10 @@ export default function Login() {
 
                     <div className="form-group">
 
-                        <label>Password</label>
+                        <label>
+                            Password
+                        </label>
+
 
                         <div className="password-box">
 
@@ -104,22 +238,31 @@ export default function Login() {
                                 }
                                 name="password"
                                 placeholder="Enter your password"
-                                value={formData.password}
-                                onChange={handleChange}
+                                value={
+                                    formData.password
+                                }
+                                onChange={
+                                    handleChange
+                                }
                                 required
                             />
+
 
                             <button
                                 type="button"
                                 onClick={() =>
-                                    setShowPassword(!showPassword)
+                                    setShowPassword(
+                                        !showPassword
+                                    )
                                 }
                             >
+
                                 {
                                     showPassword
                                         ? "Hide"
                                         : "Show"
                                 }
+
                             </button>
 
                         </div>
@@ -141,7 +284,9 @@ export default function Login() {
                         type="submit"
                         disabled={loading}
                     >
+
                         Login
+
                     </button>
 
                 </form>
@@ -161,5 +306,6 @@ export default function Login() {
             </div>
 
         </div>
+
     );
 }
