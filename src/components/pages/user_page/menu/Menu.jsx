@@ -5,10 +5,10 @@ import { usePizza } from "../../../context/pizzaContext/usePizza";
 
 export default function Menu() {
 
-  const { fetchHomePizzas, menuPizzas } = usePizza();
+  const { fetchHomePizzas, menuPizzas,fetchMenuPizzas } = usePizza();
 
   useEffect(() => {
-    (async () => { await fetchHomePizzas(); })();
+    (async () => { await fetchMenuPizzas(); })();
   }, []);
 
   const [search, setSearch] = useState("");
