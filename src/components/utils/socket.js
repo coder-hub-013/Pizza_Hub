@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:8080", {
+const socket = io("https://pizza-hub-backend-10ya.onrender.com", {
     withCredentials: true,
 });
 
