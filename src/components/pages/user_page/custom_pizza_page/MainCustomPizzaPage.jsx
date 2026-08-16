@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "./MaincustomPizzaPage.css";
 
 import { useCart } from "../../../context/cart/useCart";
@@ -17,6 +18,7 @@ export default function MainCustomPizzaPage() {
 
     const {fetchUserInventory,userInventory,userLoading} = useUser();
     const {addToCart} = useCart();
+    const navigate = useNavigate();
 
     useEffect(() => {
             (async () => {await fetchUserInventory();})();
@@ -64,6 +66,8 @@ export default function MainCustomPizzaPage() {
 
         if(result.success) {
             toast.success(result.message)
+            navigate('/cart');
+            return;
         } else {
             toast.error(result.message)
         }
